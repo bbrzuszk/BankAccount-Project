@@ -1,19 +1,20 @@
 
-public class CheckingAccount extends Account{
+public class CheckingAccount extends Account implements iAccounts{
 	
-		private double interest;
-		private double minimumBalance;
+		private final double interest;
+		private final double minimumBalance;
 		
-		public CheckingAccount(String name, int accountNum, double balance, double interest){
+		
+		public CheckingAccount(String name, int accountNum, double balance){
 			super(name, accountNum, balance);
-			this.interest = interest;
+			this.interest = 0.012;
 			this.minimumBalance = 500.0;
 		}
 		
 		public double withdraw(double amount){
 			double maxWidthdraw = this.balance - this.minimumBalance;
 			if(amount <= maxWidthdraw){	this.balance -= amount;	}
-			else{ return 0.0;	}
+			else{ return -1;	}
 			
 			return amount;
 		}
