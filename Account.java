@@ -1,5 +1,5 @@
 
-public class Account {
+public class Account implements iAccounts {
 
 		protected String owner;
 		protected int accNum;
@@ -41,7 +41,7 @@ public class Account {
 		
 		public double withdraw(double amount){
 			if(amount <= this.balance){	this.balance -= amount;	}
-			else{ return 0.0;	}
+			else{ return -1;	}
 			
 			return amount;
 		}
@@ -51,5 +51,3 @@ public class Account {
 			
 		}
 }
-
-
