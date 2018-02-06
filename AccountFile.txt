@@ -1,0 +1,8 @@
+Fred Cozzo
+12345678
+125.50
+True
+Fred Cozzo
+87654321
+500.50
+Flase
