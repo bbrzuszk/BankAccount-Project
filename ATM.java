@@ -5,6 +5,7 @@
  */
 
 
+import java.awt.Font;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
@@ -28,6 +29,8 @@ public class ATM extends javax.swing.JFrame {
     	jB_depositInterest.setEnabled(false);
     	jTF_nameSearch.setEditable(false);
     	jTF_balanceSearch.setEditable(false);
+    	jTA_output.setFont(new Font("Sans Serif", 1, 12));
+    	jTA_output.setText("\n\nWelcome to \n\nB's Better Banking\n\nSearch for an account \nby number first");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -319,15 +322,60 @@ public class ATM extends javax.swing.JFrame {
 
     private void jB_depositInterestActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         // TODO add your handling code here:
+    	try{
+    		int accNum = Integer.parseInt(jTF_accNumSearch.getText().trim());
+        	int loc = bank.findAccount(accNum);
+        	Account acc = bank.getAccounts().get(loc);
+        	if(acc instanceof CheckingAccount){
+        		String output = "Previous Account Details: \n";
+        		output += bank.displayAccount(accNum);
+        		((CheckingAccount) acc).depositInterest();
+        		output += "\n\nAccount Details after Transaction: \n";
+        		output += bank.displayAccount(accNum);
+            	jTA_output.setText(output);
+            	jTF_nameSearch.setText("");
+        		jTF_balanceSearch.setText("");
+        		jTF_accNumSearch.setText("");
+        		jB_depositInterest.setEnabled(false);
+        		
+        	}
+        	
+    	}catch(Exception e){
+    		JOptionPane.showMessageDialog(null, "Unknown Error" );
+    	}
     }                                                  
 
     private void jB_findByNameActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
-    	String output = bank.displayCustomerAccounts(jTF_findByName.getText().trim());
-    	jTA_output.setText(output);
+    
+		
+		try{
+    		String owner = jTF_findByName.getText().trim();
+    		int loc = bank.findAccount(owner);
+    		if(loc == -1){
+    			JOptionPane.showMessageDialog(null, "Account Does Not Exist");
+    			jTF_findByName.setText("Search By Name");
+    			jTF_findByAccNum.setText("Search by Account Number");
+    			}
+    		else{
+    			jTA_output.setText(bank.displayAccounts(owner)+"\n\n");
+    			jTF_findByName.setText("Search By Name");
+    			jTF_findByAccNum.setText("Search by Account Number");
+    		}
+    		
+    	}catch(Exception e){
+    		JOptionPane.showMessageDialog(null, "Account Number Must Be An Integer");
+    	}
       
     }                                             
-
+    private String splitAccounts(String s){
+    
+    	
+    		
+    
+    		
+    	return s;
+    }
     private void jB_accNumSearchActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // TODO add your handling code here:
     	try{
@@ -369,7 +417,7 @@ public class ATM extends javax.swing.JFrame {
         		String output = "Previous Account Details: \n";
         		output += bank.displayAccount(accNum);
         		acc.deposit(amount);
-        		output += "\n\nAccount Details after Transaction; \n";
+        		output += "\n\nAccount Details after Transaction: \n";
         		output += bank.displayAccount(accNum);
             	jTA_output.setText(output);
         		
@@ -397,7 +445,7 @@ public class ATM extends javax.swing.JFrame {
         		String output = "Previous Account Details: \n";
         		output += bank.displayAccount(accNum);
         		if(acc.withdraw(amount) != -1){
-        			output += "\n\nAccount Details after Transaction; \n";
+        			output += "\n\nAccount Details after Transaction: \n";
         			output += bank.displayAccount(accNum);
         			jTA_output.setText(output);
         		}
@@ -416,14 +464,50 @@ public class ATM extends javax.swing.JFrame {
 
     private void jB_findByAccNumActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // TODO add your handling code here:
+    	try{
+    		int accNum = Integer.parseInt(jTF_findByAccNum.getText().trim());
+    		int loc = bank.findAccount(accNum);
+    		if(loc == -1){
+    			JOptionPane.showMessageDialog(null, "Account Does Not Exist");
+    			jTF_findByName.setText("Search By Name");
+    			jTF_findByAccNum.setText("Search by Account Number");
+    			}
+    		else{
+    			jTA_output.setText(bank.displayAccount(accNum));
+    			jTF_findByName.setText("Search By Name");
+    			jTF_findByAccNum.setText("Search by Account Number");
+    		}
+    		
+    	}catch(Exception e){
+    		JOptionPane.showMessageDialog(null, "Account Number Must Be An Integer");
+    	}
     }                                               
 
     private void jB_addAccountActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
+    	try{
+    		String name = jTF_addName1.getText().trim();
+    		int accNum = Integer.parseInt(jTF_addAccNum.getText().trim());
+    		double bal = Double.parseDouble(jTF_balance.getText().trim());
+    		boolean isCheck = jCB_isChecking.isSelected();
+    		bank.addAccount(name, accNum, bal, isCheck);
+    		jTF_addName1.setText("Name");
+    		jTF_addAccNum.setText("Account Number");
+    		jTF_balance.setText("Balance");
+    		jCB_isChecking.setEnabled(false);
+    	}catch(Exception e){
+    		JOptionPane.showMessageDialog(null, "Fieds to add account are not \nfilled in correctly");
+    		jTF_addName1.setText("Name");
+    		jTF_addAccNum.setText("Account Number");
+    		jTF_balance.setText("Balance");
+    	}
     }                                             
 
     private void jCB_isCheckingActionPerformed(java.awt.event.ActionEvent evt) {                                               
         // TODO add your handling code here:
+    	int choice = JOptionPane.showConfirmDialog(null, "Confirm Checking", "Confirmation", 0);
+    	if(choice == 1)
+    		jCB_isChecking.setSelected(false);
     }                                              
 
     /**
