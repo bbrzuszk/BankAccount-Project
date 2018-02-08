@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Bank {
+public class Bank implements iBank {
 
 	private ArrayList<Account> accounts;
 	
@@ -20,12 +20,12 @@ public class Bank {
 		}
 		return "Account Does Not Exist";
 	}
-	public String displayCustomerAccounts(String name){
+	public String displayAccounts(String name){
 		String output = "";
 		for(Account account: accounts){
 			if(name.equalsIgnoreCase(account.getOwner())){
 				output += account.displayAccount();
-				output += "\n\n";
+				//output += "\n\n";
 			}
 			
 		}
@@ -34,7 +34,7 @@ public class Bank {
 		return output;
 	}
 	
-	public void addAccount(String name, int accNum, double bal, double interest, boolean checking){
+	public void addAccount(String name, int accNum, double bal, boolean checking){
 		if(checking){
 			accounts.add(new CheckingAccount(name, accNum, bal));
 		}
@@ -47,6 +47,15 @@ public class Bank {
 		for(int i = 0; i< accounts.size();i++){
 			if(accounts.get(i).getAccNum() == accNum)
 				return i;
+		}
+		return -1;
+	}
+	
+	public int findAccount(String name){
+		for(int i = 0; i < accounts.size(); i++){
+			if(accounts.get(i).getOwner().equals(name)){
+				return i;
+			}
 		}
 		return -1;
 	}
