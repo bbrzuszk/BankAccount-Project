@@ -1,8 +1,8 @@
 
-public class CheckingAccount extends Account implements iAccounts{
+public class CheckingAccount extends Account implements iCheckingAccount{
 	
-		private final double interest;
-		private final double minimumBalance;
+		private double interest;
+		private double minimumBalance;
 		
 		
 		public CheckingAccount(String name, int accountNum, double balance){
