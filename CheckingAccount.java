@@ -28,8 +28,8 @@ public class CheckingAccount extends Account implements iCheckingAccount{
 			
 		}
 		public String displayAccount(){
-			return "Name: " + owner + "\nAccount Number: " + this.accNum + "\nInterest Rate: " + this.interest + "\nBalance: " + this.balance;
-			
+			//return "Name: " + owner + "\nAccount Number: " + this.accNum + "\nInterest Rate: " + this.interest + "\nBalance: " + this.balance;
+			return super.displayAccount() + "\nInterest Rate: " + this.interest *100 + "%";
 		}
 	
 }
