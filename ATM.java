@@ -359,7 +359,6 @@ public class ATM extends javax.swing.JFrame {
     			}
     		else{
     			String output = Util.splitAccounts(bank.displayAccounts(owner));
-    			//System.out.print(output);
     			jTA_output.setText(output);
     			jTF_findByName.setText("Search By Name");
     			jTF_findByAccNum.setText("Search by Account Number");
