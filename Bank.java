@@ -25,7 +25,7 @@ public class Bank implements iBank {
 		for(Account account: accounts){
 			if(name.equalsIgnoreCase(account.getOwner())){
 				output += account.displayAccount();
-				//output += "\n\n";
+				
 			}
 			
 		}
