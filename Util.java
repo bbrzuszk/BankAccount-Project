@@ -27,4 +27,18 @@ public class Util {
 		return accounts;
 	}
 		
+	public static String splitAccounts(String s){
+		ArrayList<Integer>locs = new ArrayList<Integer>();
+		int index = s.indexOf("Name");
+		while(index >=0){
+			locs.add(index);
+			index = s.indexOf("Name", index + 4);
+		}
+		String output = "";
+		for(int i = 0; i < locs.size()-1; i++){
+			output += s.substring(locs.get(i), locs.get(i+1))+"\n\n";
+		}
+		output += s.substring(locs.get(locs.size()-1));
+		return output;
+	}
 }
