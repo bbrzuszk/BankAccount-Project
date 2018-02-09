@@ -358,7 +358,9 @@ public class ATM extends javax.swing.JFrame {
     			jTF_findByAccNum.setText("Search by Account Number");
     			}
     		else{
-    			jTA_output.setText(bank.displayAccounts(owner)+"\n\n");
+    			String output = Util.splitAccounts(bank.displayAccounts(owner));
+    			//System.out.print(output);
+    			jTA_output.setText(output);
     			jTF_findByName.setText("Search By Name");
     			jTF_findByAccNum.setText("Search by Account Number");
     		}
@@ -368,14 +370,7 @@ public class ATM extends javax.swing.JFrame {
     	}
       
     }                                             
-    private String splitAccounts(String s){
-    
-    	
-    		
-    
-    		
-    	return s;
-    }
+
     private void jB_accNumSearchActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // TODO add your handling code here:
     	try{
